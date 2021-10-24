@@ -1,31 +1,69 @@
-import KaKaoLogin from 'react-kakao-login';
+import { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
-const LoginMain = () => {
-  const responseKaKao = (res) => {
-    // setData(res);
-    // alert(JSON.stringify(this.state.data))
-  };
+const JAVASCRIPT_KEY = 'bdecedb6168050306415a2fe6b8be7c0';
+const REST_API_KEY = '84c5ac72fd225ac37b53929946ca6a6a';
+const REDIRECT_URI = 'http://localhost:3000/';
 
-  const responseFail = (err) => {
-    alert(err);
-  };
+const { Kakao } = window;
+
+const LoginMain = () => {
+  useEffect(() => {
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init(JAVASCRIPT_KEY);
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+  }, []);
+
+  const loginWithKakao = useCallback(() => {
+    Kakao.Auth.login({
+      success: function (authObj) {
+        alert(JSON.stringify(authObj))
+
+        // REST API : GET access token ★★★★★★★★★★★★★★★★★★★
+
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+            console.log(response);
+          },
+          fail: function (error) {
+            console.log(error);
+          }
+        });
+
+        // Kakao.Auth.logout(function () {
+        //   alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
+        // })
+
+        // Kakao.API.request({
+        //   url: '/v1/user/unlink',
+        //   success: function (res) {
+        //     alert('success: ' + JSON.stringify(res))
+        //   },
+        //   fail: function (err) {
+        //     alert('fail: ' + JSON.stringify(err))
+        //   },
+        // })
+      },
+      fail: function (err) {
+        alert(JSON.stringify(err))
+      },
+    })
+  }, []);
+
 
   return (
     <header className="App-header">
       <p>
         로그인
       </p>
-      <KaKaoBtn
-        //styled component 통해 style을 입혀 줄 예정 
-        jsKey={'bdecedb6168050306415a2fe6b8be7c0'}
-        //카카오에서 할당받은 jsKey를 입력
-        buttonText='카카오 계정으로 로그인'
-        //로그인 버튼의 text를 입력
-        onSuccess={responseKaKao}
-        onFailure={responseFail}
-        getProfile={true}
-      />
+      <a onClick={loginWithKakao}>
+        <img
+          src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
+          width="222"
+        />
+      </a>
       <p>
         돌아가기
       </p>
@@ -33,7 +71,7 @@ const LoginMain = () => {
   );
 }
 
-const KaKaoBtn = styled(KaKaoLogin)`
+const KaKaoBtn = styled.button`
   padding: 0;
   width: 300px;
   height: 45px;

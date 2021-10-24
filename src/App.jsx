@@ -5,8 +5,8 @@ import MapMain from './map/MapMain'
 function App() {
   return (
     <div className="App">
-      {/* <LoginMain /> */}
-      <MapMain />
+      <LoginMain />
+      {/* <MapMain /> */}
     </div>
   );
 }
