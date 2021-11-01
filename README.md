@@ -4,7 +4,7 @@ Let's share meal for fun like SNS!!
 ## PreRequisite
 - node js
 ## Framework & Library
-- React
+- React & NextJS
 - dJango
 - Kakao map
 ## How to Start
@@ -14,6 +14,6 @@ Let's share meal for fun like SNS!!
 ```
 > npm install
 > (... sth log ...)
-> npm start
-> (automatically pop up app!! - http://localhost:3000/)
+> npm run dev
+> (you can see you App at - http://localhost:3000/)
 ```

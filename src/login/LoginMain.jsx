@@ -1,50 +1,40 @@
 import { useEffect, useCallback } from 'react';
-import styled from 'styled-components';
 
 const JAVASCRIPT_KEY = 'bdecedb6168050306415a2fe6b8be7c0';
-const REST_API_KEY = '84c5ac72fd225ac37b53929946ca6a6a';
-const REDIRECT_URI = 'http://localhost:3000/';
-
-const { Kakao } = window;
 
 const LoginMain = () => {
   useEffect(() => {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-    Kakao.init(JAVASCRIPT_KEY);
+    window.Kakao.init(JAVASCRIPT_KEY);
     // SDK 초기화 여부를 판단합니다.
-    console.log(Kakao.isInitialized());
+    console.log(window.Kakao.isInitialized());
   }, []);
 
   const loginWithKakao = useCallback(() => {
-    Kakao.Auth.login({
-      success: function (authObj) {
-        alert(JSON.stringify(authObj))
+    window.Kakao.Auth.login({
+      success: async function (authObj) {
+        let postResponse;
+        try {
+          postResponse = await fetch('http://127.0.0.1:8000/kakao_api/', {
+            method: 'POST',
+            headers: {
+              'Authorization': authObj.access_token
+            }
+          });
+        } catch (err) {
+          alert('fail to connet server');
+          return;
+        }
+        let post;
+        try {
+          post = await postResponse.json();
+        } catch (err) {
+          alert('fail to read json');
+          return;
+        }
 
-        // REST API : GET access token ★★★★★★★★★★★★★★★★★★★
-
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-            console.log(response);
-          },
-          fail: function (error) {
-            console.log(error);
-          }
-        });
-
-        // Kakao.Auth.logout(function () {
-        //   alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken())
-        // })
-
-        // Kakao.API.request({
-        //   url: '/v1/user/unlink',
-        //   success: function (res) {
-        //     alert('success: ' + JSON.stringify(res))
-        //   },
-        //   fail: function (err) {
-        //     alert('fail: ' + JSON.stringify(err))
-        //   },
-        // })
+        localStorage.setItem('share-meal-token', post.access_token);
+        window.location.replace("./");
       },
       fail: function (err) {
         alert(JSON.stringify(err))
@@ -54,7 +44,16 @@ const LoginMain = () => {
 
 
   return (
-    <header className="App-header">
+    <header style={{
+      backgroundColor: "#282c34",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "calc(10px + 2vmin)",
+      color: "white",
+    }}>
       <p>
         로그인
       </p>
@@ -64,29 +63,18 @@ const LoginMain = () => {
           width="222"
         />
       </a>
-      <p>
-        돌아가기
-      </p>
-    </header>
+      <a
+        href="./"
+        style={{
+          textDecoration: "none",
+          color: "white",
+        }}>
+        <p>
+          돌아가기
+        </p>
+      </a>
+    </header >
   );
 }
-
-const KaKaoBtn = styled.button`
-  padding: 0;
-  width: 300px;
-  height: 45px;
-  line-height: 44px;
-  color: #783c00;
-  background-color: #ffeb00;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.2);
-  }
-`;
 
 export default LoginMain;
