@@ -5,9 +5,11 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import jwt_decode from "jwt-decode";
+import ConvertNameToRGB from '../utils/utils';
 
 const MapMain = () => {
-  const [userToken, setUserToken] = useState('');
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -19,7 +21,10 @@ const MapMain = () => {
     new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
     let token = localStorage.getItem('share-meal-token') || '';
-    setUserToken(token);
+    if (token != '') {
+      var decoded = jwt_decode(token);
+      setUserName(decoded.nickname);
+    }
   }, []);
 
 
@@ -67,7 +72,7 @@ const MapMain = () => {
               </Nav.Link>
             </Nav>
             {
-              userToken === ''
+              userName === ''
                 ?
                 <Button variant="outline-success" href="./login">Login</Button>
                 : <div style={{
@@ -78,8 +83,8 @@ const MapMain = () => {
                   fontSize: "15px",
                   color: "#fff",
                   textAlign: "center",
-                  background: "#00B0F0"
-                }}>홍진</div>
+                  background: ConvertNameToRGB(userName),
+                }}>{userName[0]}</div>
             }
           </Navbar.Collapse>
         </Container>
