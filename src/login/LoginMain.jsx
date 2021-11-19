@@ -1,5 +1,6 @@
 import KakaoLoginBtn from "./kakao/KakaoLoginBtn";
 import NaverLoginBtn from "./naver/NaverLoginBtn";
+import GoogleLoginBtn from "./google/GoogleLoginBtn";
 
 const LoginMain = () => {
   return (
@@ -18,6 +19,7 @@ const LoginMain = () => {
       </p>
       <KakaoLoginBtn />
       <NaverLoginBtn />
+      <GoogleLoginBtn />
       <a
         href="./"
         style={{
