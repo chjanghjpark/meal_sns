@@ -4,9 +4,9 @@ import { LoginAPI } from '../LoginAPI';
 
 const GoogleLoginBtn = () => {
   const onSuccess = async (response) => {
-    LoginAPI(response.accessToken, "google_api");
+    LoginAPI(response.tokenId, "google_api");
   }
-
+  
   const onFailure = (error) => {
     alert(JSON.stringify(error))
   }
