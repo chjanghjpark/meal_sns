@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import MainNavbar from './sub/MainNavbar';
+import NavbarCommon from "../NavbarCommon";
 
 const MapMain = () => {
-
   useEffect(() => {
     const container = document.getElementById('map');
     var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -15,13 +14,24 @@ const MapMain = () => {
 
   return (
     <>
+      <NavbarCommon />
+      <style type="text/css">
+        {`
+        .login-btn {
+          background-color: purple;
+          color: white;
+          height: 40px;
+          width: 40px;
+        }
+        `}
+      </style>
+
       <div style={{
         width: "100%",
         minHeight: "100%",
         top: "56px",
         position: "fixed"
       }} id='map' />
-      <MainNavbar />
     </>
   );
 }

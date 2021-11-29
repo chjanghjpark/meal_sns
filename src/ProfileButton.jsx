@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'
 import { OverlayTrigger, Popover, ListGroup } from "react-bootstrap";
-import ConvertNameToRGB from '../../utils/utils';
+import ConvertNameToRGB from './utils/utils';
 import { onLogout, getUserInfo } from '../../utils/tokenUtils';
 
 const ProfileButton = () => {
