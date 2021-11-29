@@ -15,7 +15,7 @@ const NaverLoginBtn = () => {
     naverLogin.init();
 
     window.naverLoginCallback = async (access_token) => {
-      LoginAPI(access_token, "naver_api");
+      LoginAPI(access_token, 'naver');
     }
   }, []);
 

@@ -12,7 +12,7 @@ const KakaoLoginBtn = () => {
   const loginWithKakao = useCallback(() => {
     window.Kakao.Auth.login({
       success: async function (authObj) {
-        LoginAPI(authObj.access_token, "kakao_api");
+        LoginAPI(authObj.access_token, 'kakao');
       },
       fail: function (err) {
         alert(JSON.stringify(err))

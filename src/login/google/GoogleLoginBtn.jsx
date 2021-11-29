@@ -4,7 +4,7 @@ import { LoginAPI } from '../LoginAPI';
 
 const GoogleLoginBtn = () => {
   const onSuccess = async (response) => {
-    LoginAPI(response.tokenId, "google_api");
+    LoginAPI(response.tokenId, 'google');
   }
   
   const onFailure = (error) => {
