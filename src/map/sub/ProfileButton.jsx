@@ -10,7 +10,7 @@ const ProfileButton = () => {
 
   useEffect(() => {
     try {
-      let token = localStorage.getItem('share-meal-token') || '';
+      let token = localStorage.getItem('share-meal-access_token') || '';
       if (token != '') {
         var decoded = jwt_decode(token);
         setUserName(decoded.nickname);
@@ -28,7 +28,7 @@ const ProfileButton = () => {
   }, []);
 
   const onClickLogout = useCallback(() => {
-    localStorage.removeItem('share-meal-token');
+    localStorage.removeItem('share-meal-access_token');
     setUserName('');
     setUserID('');
   }, []);
