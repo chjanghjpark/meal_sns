@@ -1,37 +1,32 @@
 import { useCallback, useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'
 import { OverlayTrigger, Popover, ListGroup } from "react-bootstrap";
-import jwt_decode from "jwt-decode";
 import ConvertNameToRGB from '../../utils/utils';
+import { onLogout, getUserInfo } from '../../utils/tokenUtils';
 
 const ProfileButton = () => {
   const [userName, setUserName] = useState('');
   const [userID, setUserID] = useState('');
-
-  useEffect(() => {
-    try {
-      let token = localStorage.getItem('share-meal-access_token') || '';
-      if (token != '') {
-        var decoded = jwt_decode(token);
-        setUserName(decoded.nickname);
-        setUserID(decoded.user_id);
-      }
-    } catch (err) {
-      alert('fail to decode jwt');
-      setUserName('');
-      setUserID('');
-    }
-  }, []);
 
   const onClickMypage = useCallback(() => {
     alert('아직 그런거 없다..');
   }, []);
 
   const onClickLogout = useCallback(() => {
-    localStorage.removeItem('share-meal-access_token');
+    onLogout();
     setUserName('');
     setUserID('');
   }, []);
+
+  const fetchUserInfoAPI = useCallback(async () => {
+    const userInfo = await getUserInfo();
+    setUserName(userInfo.nickName);
+    setUserID(userInfo.user_id);
+  }, [])
+
+  useEffect(() => {
+    fetchUserInfoAPI()
+  }, [fetchUserInfoAPI])
 
   return (
     <>

@@ -1,3 +1,5 @@
+import { onLogin } from "../utils/tokenUtils";
+
 export const LoginAPI = async (accessToken, platform) => {
   let postResponse;
   try {
@@ -7,7 +9,7 @@ export const LoginAPI = async (accessToken, platform) => {
         'Authorization': accessToken,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'login_site': platform}) // body data type must match "Content-Type" header
+      body: JSON.stringify({ 'login_site': platform }) // body data type must match "Content-Type" header
     });
   } catch (err) {
     alert('fail to connet server');
@@ -23,7 +25,6 @@ export const LoginAPI = async (accessToken, platform) => {
     return;
   }
 
-  localStorage.setItem('share-meal-access_token', post.access_token);
-  localStorage.setItem('share-meal-refresh_token', post.refresh_token);
+  onLogin(post.access_token, post.refresh_token);
   window.location.replace("./");
 }
