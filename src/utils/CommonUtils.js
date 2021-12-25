@@ -1,4 +1,4 @@
-export default function ConvertNameToRGB(userName) {
+export const ConvertNameToRGB = (userName) => {
   const nIdx = 0;
   if (userName && userName != '') {
     for (let i = 0; i < userName.length; i++) {
@@ -40,4 +40,8 @@ export default function ConvertNameToRGB(userName) {
     case 23: sColor = "#A79B8E"; break;
   }
   return sColor;
+}
+
+export const ReturnToMainPage = () => {
+  window.location.replace("./");
 }

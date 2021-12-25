@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { LoginAPI } from '../LoginAPI';
+import { LoginAndReturnMain } from '../../utils/LoginUtils';
 
 const NAVER_CLIENT_ID = '9jsLZgdidzjbT3DirLSx';
 
@@ -15,7 +15,7 @@ const NaverLoginBtn = () => {
     naverLogin.init();
 
     window.naverLoginCallback = async (access_token) => {
-      LoginAPI(access_token, 'naver');
+      LoginAndReturnMain(access_token, 'naver');
     }
   }, []);
 

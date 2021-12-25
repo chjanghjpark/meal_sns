@@ -1,8 +1,20 @@
+import { useEffect, useState } from "react";
 import KakaoLoginBtn from "./kakao/KakaoLoginBtn";
 import NaverLoginBtn from "./naver/NaverLoginBtn";
 import GoogleLoginBtn from "./google/GoogleLoginBtn";
+import { ReturnToMainPage } from "../utils/CommonUtils";
+import { IsLogin } from "../utils/LoginUtils";
 
 const LoginMain = () => {
+  const [isLogin, SetIsLogin] = useState(true);
+  useEffect(() => {
+    if (IsLogin()) {
+      ReturnToMainPage();
+      return;
+    }
+    SetIsLogin(false);
+  }, []);
+
   return (
     <header style={{
       backgroundColor: "#282c34",
@@ -14,22 +26,25 @@ const LoginMain = () => {
       fontSize: "calc(10px + 2vmin)",
       color: "white",
     }}>
-      <p>
-        로그인
-      </p>
-      <KakaoLoginBtn />
-      <NaverLoginBtn />
-      <GoogleLoginBtn />
-      <a
-        href="./"
-        style={{
-          textDecoration: "none",
-          color: "white",
-        }}>
-        <p>
-          돌아가기
-        </p>
-      </a>
+      {
+        !isLogin &&
+        <>
+          <p>로그인</p>
+          <KakaoLoginBtn />
+          <NaverLoginBtn />
+          <GoogleLoginBtn />
+          <a
+            href="./"
+            style={{
+              textDecoration: "none",
+              color: "white",
+            }}>
+            <p>
+              돌아가기
+            </p>
+          </a>
+        </>
+      }
     </header >
   );
 }

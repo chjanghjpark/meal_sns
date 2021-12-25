@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import NavbarCommon from "../NavbarCommon";
+import NavbarCommon from "../navbar/NavbarCommon";
 
 const MapMain = () => {
   useEffect(() => {

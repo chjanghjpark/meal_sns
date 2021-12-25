@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { LoginAPI } from '../LoginAPI';
+import { LoginAndReturnMain } from '../../utils/LoginUtils';
 
 const KAKAO_JAVASCRIPT_KEY = 'bdecedb6168050306415a2fe6b8be7c0';
 
@@ -12,7 +12,7 @@ const KakaoLoginBtn = () => {
   const loginWithKakao = useCallback(() => {
     window.Kakao.Auth.login({
       success: async function (authObj) {
-        LoginAPI(authObj.access_token, 'kakao');
+        LoginAndReturnMain(authObj.access_token, 'kakao');
       },
       fail: function (err) {
         alert(JSON.stringify(err))

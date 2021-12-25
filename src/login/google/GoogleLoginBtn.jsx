@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { LoginAPI } from '../LoginAPI';
+import { LoginAndReturnMain } from '../../utils/LoginUtils';
 
 const GoogleLoginBtn = () => {
   const onSuccess = async (response) => {
-    LoginAPI(response.tokenId, 'google');
+    LoginAndReturnMain(response.tokenId, 'google');
   }
-  
+
   const onFailure = (error) => {
     alert(JSON.stringify(error))
   }

@@ -1,60 +1,58 @@
 import jwt_decode from "jwt-decode";
 
-export function onLogin(accessToken, refreshToken) {
+const SHARE_MEAL_ACCESS_TOKEN_KEY = 'share-meal-access-token';
+const SHARE_MEAL_REFRESH_TOKEN_KEY = 'share-meal-refresh-token';
+
+export const SetToken = (accessToken, refreshToken) => {
   localStorage.setItem(
-    'share-meal-access-token',
+    SHARE_MEAL_ACCESS_TOKEN_KEY,
     accessToken
   );
 
   const refreshDecode = jwt_decode(refreshToken);
-  setCookie('share-meal-refresh-token', refreshToken, new Date(refreshDecode.exp * 1000));
+  setCookie(SHARE_MEAL_REFRESH_TOKEN_KEY, refreshToken, new Date(refreshDecode.exp * 1000));
 }
 
-export function onLogout() {
-  localStorage.removeItem('share-meal-access-token');
-  removeCookie('share-meal-refresh-token');
+export const GetAccessToken = () => {
+  return localStorage.getItem(SHARE_MEAL_ACCESS_TOKEN_KEY);
 }
 
-export async function getUserInfo() {
-  try {
-    const decode = localStorage.getItem("share-meal-access-token");
-    const expireAt = jwt_decode(decode);
-    const refreshToken = getCookie("share-meal-refresh-token");
-    if (Date.now() >= expireAt * 1000 && refreshToken != "") {
-      // get access token by refresh token! & backend need to expired token too!
-      // localStorage.setItem(
-      //   'share-meal-access-token',
-      //   accessToken
-      // );
-    }
+export const GetAccessTokenDecode = () => {
+  const accessToken = GetAccessToken();
+  if (!accessToken)
+    return;
 
-    let token = localStorage.getItem('share-meal-access-token');
-    if (!token) {
-      return {
-        nickName: '',
-        user_id: '',
-      };
-    }
-
-    var decoded = jwt_decode(token);
-    return {
-      nickName: decoded.nickname,
-      user_id: decoded.user_id,
-    };
-  } catch (err) {
-    return {
-      nickName: '',
-      user_id: '',
-    };
-  }
+  return jwt_decode(accessToken);
 }
 
-function setCookie(cname, cvalue, exdays) {
+export const GetRefreshToken = () => {
+  return getCookie(SHARE_MEAL_REFRESH_TOKEN_KEY);
+}
+
+export const ClearToken = () => {
+  localStorage.removeItem(SHARE_MEAL_ACCESS_TOKEN_KEY);
+  removeCookie(SHARE_MEAL_REFRESH_TOKEN_KEY);
+}
+
+export const IsAccessTokenValid = () => {
+  const accessToken = localStorage.getItem(SHARE_MEAL_ACCESS_TOKEN_KEY);
+  if (!accessToken)
+    return false;
+  const accessDecode = jwt_decode(accessToken);
+  return Date.now() < accessDecode.exp * 1000;
+}
+
+export const IsRefreshTokenValid = () => {
+  const refreshToken = getCookie(SHARE_MEAL_REFRESH_TOKEN_KEY);
+  return refreshToken != "";
+}
+
+const setCookie = (cname, cvalue, exdays) => {
   let expires = "expires=" + exdays.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-function getCookie(cname) {
+const getCookie = (cname) => {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -70,6 +68,6 @@ function getCookie(cname) {
   return "";
 }
 
-function removeCookie(cname) {
+const removeCookie = (cname) => {
   document.cookie = `${cname}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }

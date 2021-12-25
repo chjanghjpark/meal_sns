@@ -1,10 +1,21 @@
-import { useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Table from 'react-bootstrap/Table'
-import NavbarCommon from "../NavbarCommon";
+import NavbarCommon from "../navbar/NavbarCommon";
 import Button from 'react-bootstrap/Button';
+import { IsLogin } from '../utils/LoginUtils';
+import { ReturnToMainPage } from '../utils/CommonUtils';
 
-let pkStore;
 const ListMain = () => {
+  const [isLogin, SetIsLogin] = useState(false);
+  useEffect(() => {
+    if (!IsLogin()) {
+      alert('로그인이 필요한 서비스입니다.');
+      ReturnToMainPage();
+      return;
+    }
+    SetIsLogin(true);
+  }, []);
+
   const onClickTest = useCallback(async () => {
     let accessToken = localStorage.getItem("share-meal-access-token");
     let postResponse;
@@ -123,6 +134,7 @@ const ListMain = () => {
   }, []);
 
   return (
+    isLogin &&
     <>
       <NavbarCommon />
       <Button

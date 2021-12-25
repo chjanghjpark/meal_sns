@@ -1,12 +1,10 @@
-import { onLogin } from "../utils/tokenUtils";
-
-export const LoginAPI = async (accessToken, platform) => {
+export const GetTokenAPI = async (snsAccessToken, platform) => {
   let postResponse;
   try {
     postResponse = await fetch(`http://127.0.0.1:8000/login/`, {
       method: 'POST',
       headers: {
-        'Authorization': accessToken,
+        'Authorization': snsAccessToken,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 'login_site': platform }) // body data type must match "Content-Type" header
@@ -25,6 +23,14 @@ export const LoginAPI = async (accessToken, platform) => {
     return;
   }
 
-  onLogin(post.access_token, post.refresh_token);
-  window.location.replace("./");
+  return {
+    accessToken: post.access_token,
+    refreshToken: post.refresh_token
+  };
+}
+
+export const RefreshAccessTokenAPI = async (refreshToken) => {
+  // To Do...
+  alert("Need to update Refresh API");
+  return false;
 }

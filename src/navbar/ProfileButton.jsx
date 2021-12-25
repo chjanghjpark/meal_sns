@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'
 import { OverlayTrigger, Popover, ListGroup } from "react-bootstrap";
-import ConvertNameToRGB from './utils/utils';
-import { onLogout, getUserInfo } from './utils/tokenUtils';
+import { Logout } from '../utils/LoginUtils';
+import { ConvertNameToRGB } from '../utils/CommonUtils';
+import { GetUserInfo } from '../utils/LoginUtils';
 
 const ProfileButton = () => {
   const [userName, setUserName] = useState('');
@@ -13,13 +14,18 @@ const ProfileButton = () => {
   }, []);
 
   const onClickLogout = useCallback(() => {
-    onLogout();
+    Logout();
     setUserName('');
     setUserID('');
   }, []);
 
   const fetchUserInfoAPI = useCallback(async () => {
-    const userInfo = await getUserInfo();
+    const userInfo = await GetUserInfo();
+    if (!userInfo) {
+      setUserName('');
+      setUserID('');
+      return;
+    }
     setUserName(userInfo.nickName);
     setUserID(userInfo.user_id);
   }, [])
