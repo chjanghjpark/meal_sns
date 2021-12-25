@@ -14,6 +14,12 @@ const MapMain = () => {
 
   return (
     <>
+      <div style={{
+        width: "100%",
+        minHeight: "100%",
+        top: "56px",
+        position: "fixed"
+      }} id='map' />
       <NavbarCommon />
       <style type="text/css">
         {`
@@ -25,13 +31,6 @@ const MapMain = () => {
         }
         `}
       </style>
-
-      <div style={{
-        width: "100%",
-        minHeight: "100%",
-        top: "56px",
-        position: "fixed"
-      }} id='map' />
     </>
   );
 }
