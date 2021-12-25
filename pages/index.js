@@ -1,10 +1,10 @@
-import MapMain from '../src/map/MapMain'
+import MapMainContainer from '../src/map/MapMainContainer'
 import { SSRProvider } from '@react-aria/ssr'
 
 const Index = () => {
   return (
     <SSRProvider>
-      <MapMain />
+      <MapMainContainer />
     </SSRProvider>
   );
 }

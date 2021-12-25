@@ -2,7 +2,7 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Container from 'react-bootstrap/Container'
-import ProfileButton from './ProfileButton'
+import ProfileBtnContainer from './ProfileBtnContainer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NavbarCommon = () => {
@@ -30,7 +30,7 @@ const NavbarCommon = () => {
               disabled
             </Nav.Link>
           </Nav>
-          <ProfileButton />
+          <ProfileBtnContainer />
         </Navbar.Collapse>
       </Container>
     </Navbar>

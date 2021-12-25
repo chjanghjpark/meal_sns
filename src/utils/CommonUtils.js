@@ -1,13 +1,13 @@
 export const ConvertNameToRGB = (userName) => {
-  const nIdx = 0;
-  if (userName && userName != '') {
+  let nIdx = 0;
+  if (userName && userName !== '') {
     for (let i = 0; i < userName.length; i++) {
       nIdx += userName.charCodeAt(i);
       nIdx = nIdx % 24;
     }
   }
 
-  const sColor = "";
+  let sColor = "";
   switch (nIdx) {
     case 0: sColor = "#AD1457"; break;
     case 1: sColor = "#D81B60"; break;
@@ -38,6 +38,7 @@ export const ConvertNameToRGB = (userName) => {
     case 21: sColor = "#795548"; break;
     case 22: sColor = "#616161"; break;
     case 23: sColor = "#A79B8E"; break;
+    default: sColor = "#FFFFFF"; break;
   }
   return sColor;
 }

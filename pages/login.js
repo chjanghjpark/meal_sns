@@ -1,10 +1,10 @@
-import LoginMain from '../src/login/LoginMain'
+import LoginMainContainer from '../src/login/LoginMainContainer'
 import { SSRProvider } from '@react-aria/ssr'
 
 const Index = () => {
   return (
     <SSRProvider>
-      <LoginMain />
+      <LoginMainContainer />
     </SSRProvider>
   );
 }

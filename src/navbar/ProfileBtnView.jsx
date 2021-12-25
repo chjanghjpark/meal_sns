@@ -1,39 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button'
-import { OverlayTrigger, Popover, ListGroup } from "react-bootstrap";
-import { Logout } from '../utils/LoginUtils';
+import { OverlayTrigger, Popover, ListGroup } from 'react-bootstrap';
 import { ConvertNameToRGB } from '../utils/CommonUtils';
-import { GetUserInfo } from '../utils/LoginUtils';
 
-const ProfileButton = () => {
-  const [userName, setUserName] = useState('');
-  const [userID, setUserID] = useState('');
-
-  const onClickMypage = useCallback(() => {
-    alert('아직 그런거 없다..');
-  }, []);
-
-  const onClickLogout = useCallback(() => {
-    Logout();
-    setUserName('');
-    setUserID('');
-  }, []);
-
-  const fetchUserInfoAPI = useCallback(async () => {
-    const userInfo = await GetUserInfo();
-    if (!userInfo) {
-      setUserName('');
-      setUserID('');
-      return;
-    }
-    setUserName(userInfo.nickName);
-    setUserID(userInfo.user_id);
-  }, [])
-
-  useEffect(() => {
-    fetchUserInfoAPI()
-  }, [fetchUserInfoAPI])
-
+const ProfileBtnView = ({ userName, userID, onClickMypage, onClickLogout }) => {
   return (
     <>
       {
@@ -78,4 +47,4 @@ const ProfileButton = () => {
   );
 }
 
-export default ProfileButton;
+export default ProfileBtnView;
