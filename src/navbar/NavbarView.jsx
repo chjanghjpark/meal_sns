@@ -2,10 +2,9 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Container from 'react-bootstrap/Container'
-import ProfileBtnContainer from './ProfileBtnContainer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const NavbarCommon = () => {
+const NavbarView = ({ profileBtnContainer }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -30,11 +29,11 @@ const NavbarCommon = () => {
               disabled
             </Nav.Link>
           </Nav>
-          <ProfileBtnContainer />
+          {profileBtnContainer}
         </Navbar.Collapse>
       </Container>
     </Navbar>
   )
 }
 
-export default NavbarCommon;
+export default NavbarView;

@@ -1,10 +1,10 @@
-import ListMain from '../src/list/ListMain'
+import ListMainContainer from '../src/list/ListMainContainer'
 import { SSRProvider } from '@react-aria/ssr'
 
 const Index = () => {
   return (
     <SSRProvider>
-      <ListMain />
+      <ListMainContainer />
     </SSRProvider>
   );
 }

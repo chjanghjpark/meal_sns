@@ -1,6 +1,4 @@
-import NavbarCommon from "../navbar/NavbarCommon";
-
-const MapMainView = () => {
+const MapMainView = ({ navbarContainer }) => {
   return (
     <>
       <div style={{
@@ -9,7 +7,7 @@ const MapMainView = () => {
         top: "56px",
         position: "fixed"
       }} id='map' />
-      <NavbarCommon />
+      {navbarContainer}
       <style type="text/css">
         {`
         .login-btn {
