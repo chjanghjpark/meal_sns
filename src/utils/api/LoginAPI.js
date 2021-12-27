@@ -11,7 +11,6 @@ export const GetTokenAPI = async (snsAccessToken, platform) => {
     });
   } catch (err) {
     alert('fail to connet server');
-    console.log(err)
     return;
   }
 

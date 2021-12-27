@@ -11,7 +11,6 @@ export const EvalPostAPI = async (accessToken, storeData) => {
     });
   } catch (err) {
     alert('fail to connet server');
-    console.log(err)
     return;
   }
 
@@ -34,7 +33,6 @@ export const EvalGetAPI = async (accessToken) => {
     });
   } catch (err) {
     alert('fail to connet server');
-    console.log(err)
     return;
   }
 
@@ -46,5 +44,13 @@ export const EvalGetAPI = async (accessToken) => {
     return;
   }
 
-  return post.eval;
+  let stores;
+  try {
+    stores = JSON.parse(post.eval);
+  } catch (err) {
+    alert('fail to read json');
+    return;
+  }
+
+  return stores;
 }

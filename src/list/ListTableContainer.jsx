@@ -9,7 +9,7 @@ const ListTableContainer = () => {
     if (!accessToken)
       return;
 
-    return EvalGetAPI(accessToken);
+      return EvalGetAPI(accessToken);
   }, []);
 
   return <ListTableView loading={loading} error={error} response={response} />;

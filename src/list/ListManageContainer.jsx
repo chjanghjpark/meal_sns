@@ -22,7 +22,8 @@ const ListManageContainer = () => {
     if (!accessToken)
       return;
 
-    await EvalGetAPI(accessToken);
+    const data = await EvalGetAPI(accessToken);
+    console.log(data);
   }, []);
 
   const onClickPut = useCallback(async () => {
