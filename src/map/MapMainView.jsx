@@ -1,4 +1,4 @@
-const MapMainView = ({ navbarContainer }) => {
+const MapMainView = ({ navbarContainer, mapInputContainer }) => {
   return (
     <>
       <div style={{
@@ -8,6 +8,7 @@ const MapMainView = ({ navbarContainer }) => {
         position: "fixed"
       }} id='map' />
       {navbarContainer}
+      {mapInputContainer}
       <style type="text/css">
         {`
         .login-btn {

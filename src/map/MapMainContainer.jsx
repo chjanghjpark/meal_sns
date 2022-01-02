@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import MapMainView from "./MapMainView";
 import NavbarContainer from "../navbar/NavbarContainer";
+import MapInputContainer from "./MapInputContainer";
 
 const MapMainContainer = () => {
   useEffect(() => {
@@ -13,7 +14,10 @@ const MapMainContainer = () => {
     new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
   }, []);
 
-  return <MapMainView navbarContainer={<NavbarContainer />} />;
+  return <MapMainView
+    navbarContainer={<NavbarContainer/>}
+    mapInputContainer={<MapInputContainer/>}
+  />;
 }
 
 export default MapMainContainer;

@@ -12,3 +12,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div .div_location {
+  width: 400px;
+  padding: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  div .div_location {
+    padding: 10px;
+  }
+}
