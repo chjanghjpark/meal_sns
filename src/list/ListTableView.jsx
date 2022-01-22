@@ -35,7 +35,7 @@ const ListTableView = ({ loading, error, response }) => {
                 return (
                   <tr>
                     <td>(음식점)</td>
-                    <td>{data.fields.store}</td>
+                    <td>{data.fields.store.place_name}</td>
                     <td>(지역)</td>
                     <td>{data.fields.star}</td>
                   </tr>
@@ -60,8 +60,8 @@ const ListTableView = ({ loading, error, response }) => {
               {response.map((data) => {
                 return (
                   <tr>
-                    <td>(음식점)</td>
-                    <td>{data.fields.store}</td>
+                    <td>{data.fields.store.category_group_name}</td>
+                    <td>{data.fields.store.place_name}</td>
                     <td>(지역)</td>
                     <td>{data.fields.star}</td>
                     <td>(한줄평)</td>
