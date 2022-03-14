@@ -1,7 +1,10 @@
+// import dotenv from "dotenv";
+// dotenv.config();
+
 export const GetTokenAPI = async (snsAccessToken, platform) => {
   let postResponse;
   try {
-    postResponse = await fetch(`http://127.0.0.1:8000/login/`, {
+    postResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/login/`, {
       method: 'POST',
       headers: {
         'Authorization': snsAccessToken,

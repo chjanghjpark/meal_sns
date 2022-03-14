@@ -1,12 +1,10 @@
 import { useEffect, useCallback } from 'react';
 import { LoginAndReturnMain } from '../../utils/LoginUtils';
 
-const KAKAO_JAVASCRIPT_KEY = 'bdecedb6168050306415a2fe6b8be7c0';
-
 const KakaoLoginBtn = () => {
   useEffect(() => {
     // Kakao Init
-    window.Kakao.init(KAKAO_JAVASCRIPT_KEY);
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
   }, []);
 
   const loginWithKakao = useCallback(() => {

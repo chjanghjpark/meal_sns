@@ -1,13 +1,20 @@
-import { useEffect, useState, useCallback } from "react";
-import MapMainView from "./MapMainView";
-import NavbarContainer from "../navbar/NavbarContainer";
-import MapInputContainer from "./MapInputContainer";
+import { useEffect, useState, useCallback } from 'react';
+import MapMainView from './MapMainView';
+import NavbarContainer from '../navbar/NavbarContainer';
+import MapInputContainer from './MapInputContainer';
+import MapListContainer from './MapListContainer'
+import { SearchLocation } from '../utils/api/KakaoMapAPI';
+import { displayInfowindow, closeInfowindow } from '../utils/InfoWindowUtils';
 
-let map = null;
 let markers = [];
 
 const MapMainContainer = () => {
+  const [map, setMap] = useState(null);
+  const [infowindow, setInfowindow] = useState(null);
+  const [searchKeywords, setSearchKeywords] = useState("");
   const [places, setPlaces] = useState([]);
+  const [pageableCount, setPageableCount] = useState(1);
+  const [curPage, setCurPage] = useState(1);
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -16,7 +23,11 @@ const MapMainContainer = () => {
       level: 3 //지도의 레벨(확대, 축소 정도)
     };
 
-    map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    const newMap = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    setMap(newMap);
+
+    const newInfowindow = new window.kakao.maps.InfoWindow({zIndex:1});
+    setInfowindow(newInfowindow);
   }, []);
 
   useEffect(() => {
@@ -26,6 +37,9 @@ const MapMainContainer = () => {
     markers = [];
 
     let bounds = new kakao.maps.LatLngBounds();
+
+    if (places == null)
+      return;
 
     for (let i = 0; i < places.length; i++) {
       const position = new kakao.maps.LatLng(places[i].y, places[i].x);
@@ -48,12 +62,21 @@ const MapMainContainer = () => {
           clickable: true
         });
 
-      kakao.maps.event.addListener(marker, 'click', function() {
-        alert('!!');
-      });
+        kakao.maps.event.addListener(marker, 'mouseover', function() {
+          displayInfowindow(map, marker, infowindow, places[i].place_name);
+        });
 
-      marker.setMap(map); // 지도 위에 마커를 표출합니다
-      markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+        kakao.maps.event.addListener(marker, 'mouseout', function() {
+          closeInfowindow(infowindow);
+        });
+
+        kakao.maps.event.addListener(marker, 'click', function() {
+          alert('!!');
+        });
+
+        marker.setMap(map); // 지도 위에 마커를 표출합니다
+        markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+        places[i].marker = marker;
     }
 
     if (places.length != 0)
@@ -61,13 +84,28 @@ const MapMainContainer = () => {
 
   }, [places]);
 
-  const placesUpdater = useCallback((data) => {
-    setPlaces(data);
+  const placesUpdater = useCallback(async (value, page) => {
+    const searchResult = await SearchLocation(value, page);
+    if (searchResult) {
+      setSearchKeywords(value);
+      setPlaces(searchResult.documents);
+      setPageableCount(searchResult.meta.pageable_count);
+      setCurPage(page);
+    }
   }, []);
 
   return <MapMainView
     navbarContainer={<NavbarContainer/>}
     mapInputContainer={<MapInputContainer placesUpdater={placesUpdater}/>}
+    mapListContainer={<MapListContainer
+      placesUpdater={placesUpdater}
+      searchKeywords={searchKeywords}
+      places={places}
+      pageableCount={pageableCount}
+      curPage={curPage}
+      map={map}
+      infowindow={infowindow}
+    />}
   />;
 }
 

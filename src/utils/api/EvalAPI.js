@@ -1,7 +1,16 @@
+// import dotenv from "dotenv";
+// dotenv.config();
+
 export const EvalPostAPI = async (accessToken, storeData) => {
+  storeData.star= 5;
+  storeData.content= "content";
+  storeData.invited_date= "2022-01-01";
+  storeData.open_close= true;
+  storeData.area= "area"; // address_name 첫번째 단어????????????????????????
+  storeData.district= "district"; // address_name 첫번째 단어????????????????????????
   let postResponse;
   try {
-    postResponse = await fetch(`http://127.0.0.1:8000/eval/`, {
+    postResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/eval/`, {
       method: 'POST',
       headers: {
         'Authorization': accessToken,
@@ -25,7 +34,7 @@ export const EvalPostAPI = async (accessToken, storeData) => {
 export const EvalGetAPI = async (accessToken) => {
   let postResponse;
   try {
-    postResponse = await fetch(`http://127.0.0.1:8000/eval/`, {
+    postResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/eval/`, {
       method: 'GET',
       headers: {
         'Authorization': accessToken

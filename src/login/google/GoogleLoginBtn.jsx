@@ -12,7 +12,7 @@ const GoogleLoginBtn = () => {
 
   return (
     <GoogleLogin
-      clientId="506826022275-kaqkf69c5ud0kt3g98s50d8sbi7stg2f.apps.googleusercontent.com"
+      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
       render={renderProps => (
         <a
           style={{

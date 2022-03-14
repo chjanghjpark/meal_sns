@@ -1,7 +1,7 @@
-export const SearchLocation = async (searchKeyword) => {
+export const SearchLocation = async (searchKeyword, page) => {
     let postResponse;
     try {
-      postResponse = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchKeyword}`, {
+      postResponse = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchKeyword}&page=${page}`, {
         method: 'POST',
         headers: {
           'Authorization': 'KakaoAK 84c5ac72fd225ac37b53929946ca6a6a',
